@@ -38,8 +38,12 @@ function processConversion(req, res, next){
       returnUnit: returnUnit,
       string: outputString
     };
-  }else if(initNum == 'invalid number' && initUnit != 'invalid unit'){ output = initNum; }
+  }
+  //if number is invalid
+  else if(initNum == 'invalid number' && initUnit != 'invalid unit'){ output = initNum; }
+  //if unit is invalid
   else if(initUnit == 'invalid unit' && initNum != 'invalid number'){ output = initUnit; } 
+  //if both number and unit are invalid
   else{ output = 'invalid number and unit'; }
   req.result = output;
   next();
