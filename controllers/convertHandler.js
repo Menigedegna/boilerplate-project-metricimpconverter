@@ -1,14 +1,16 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    //extract the digits at the begining of the string
     let result = "invalid number";
+    // extract numbers from input
     let num = input.match(/([0-9/.]+)/g);
+    
     // if number is provided
-    if (num){
+    if ( num ){
+      // if there is only one index for number & number comes before unit
       if ( num.length==1 && input.indexOf(num[0])==0 ){
         num = num[0];
-        //check if fractions and decimal only occur once
+        //if fractions and decimal only occur once
         let fractionOccurs =  num.match(/[/]/g);
         let decimalOccurs =  num.match(/[.]/g);
         if(
@@ -38,27 +40,19 @@ function ConvertHandler() {
     let unitDic = {gal: "gal", l: "L", mi: "mi", km: "km", lbs: "lbs", kg: "kg"};
     let result = "invalid unit";
     
-    //extract what comes after the digits
+    //extract characters in input
     let unit = input.match(/([a-z]+)/gi); 
     
-     //if numerical isn't provided unit should be at position 0, after digits
-    let num = input.match(/([^a-z]+)/gi);
-    let unitPosition = undefined;
-    if (num && num!=undefined){
-      unitPosition = num[0].length;
-    } 
-    else{
-      unitPosition = 0;
-    }
+    //get index of first digit and firt character
+    let firstDigitIndex = input.search(/([0-9])/);
+    let firstCharIndex = input.search(/[a-z]/i);
     
-    //if unit is found at the right position of input and is a valid unit
-    if(unit 
-       && unit != undefined 
-       && unit.length>0 
-       && Object.keys(unitDic).indexOf(unit[0].toLowerCase())>-1
-       && input.indexOf(unit[0]) == unitPosition
-      ){
-      result = unitDic[unit[0].toLowerCase()];
+    //if unit is found & unit comes after numeric value 
+    if(firstCharIndex > -1 && firstDigitIndex < firstCharIndex){
+      // if unit is recognized
+      if( Object.keys(unitDic).indexOf(unit[0].toLowerCase())>-1 ){
+        result = unitDic[unit[0].toLowerCase()];
+      }
     }
     return result;
   };
