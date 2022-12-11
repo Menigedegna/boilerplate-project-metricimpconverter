@@ -31,9 +31,10 @@ suite('Unit Tests', function(){
     });
     // #4
     test('Should correctly correctly return the spelled-out string unit for each valid input unit', function () {
-        for (let unit in validUnits){
-          assert.equal(convertHandler.spellOutUnit("1.5" + unit), spellOutUnits[unit], `spellOutUnit("1.5${unit}") should return ${spellOutUnits[unit]}`);
-        }
+      for (let idx in validUnits) {
+        let unit = validUnits[idx].toLowerCase();
+        assert.equal(convertHandler.spellOutUnit(unit), spellOutUnits[unit], `spellOutUnit("${unit}") should return ${spellOutUnits[unit]}`);
+      }
     });  
     
   });//end suite unit
